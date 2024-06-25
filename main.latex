@@ -1,0 +1,22 @@
+\documentclass{article}
+\usepackage{hyperref}
+
+\title{Google StreetView API Overview}
+\author{Lukas Weber}
+
+\begin{document}
+
+	\maketitle
+
+	\section{API Usage and Pricing}
+	\textbf{Unfortunately, while Google StreetView supports historical data, the StreetView API does not. This means getting pictures of houses over time will not be possible. Only the most recent image is provided.}
+
+	In order to use the streetview API an API key and a signiature. Both of these are obtained via the Google Maps Platofom. In short, a billing account and a project have to be set up. Google provides \$200 worth of the API for a month, as well as a \$300 trial. Google prices the API at \$140 for 20 000 street-view images.
+
+	Google provides a program for some institutions to recieve free credits. They lit university faculty interested in using Google Streetview for a course, as well as disaster responses as eligible for receiving credit. This program is probably worth applying to. 
+
+	\begin{itemize}
+		\item{\href{https://developers.google.com/maps/billing-and-pricing/public-programs?_gl=1*zhb6ns*_up*MQ..*_ga*MTc1ODExMDE4Ny4xNzE3MDMwMzAy*_ga_NRWSTWS78N*MTcxNzAzMDMwMS4xLjAuMTcxNzAzMDY1OC4wLjAuMA..}{Google Maps API pricing.}}
+	\end{itemize}
+
+\end{document}
