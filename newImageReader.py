@@ -2,35 +2,63 @@ import pandas as pd
 import numpy as np
 import os 
 from PIL import Image 
-import glob
 
-data = pd.read_csv("All_HousingRecovery.csv")
-data["ImageName"] = "";
+data = pd.read_csv("withImgNames.csv")
 
+def HSVToGreen(name):
+    img = Image.open("general/" + name)
+    im = np.asarray(img.convert('HSV'))
+    greenCount = 0
+    current = 0
+
+    for i in range(640):
+        for j in range(640):
+            current = (im[i,j,0])
+            if (current > 57 and current < 98):
+                greenCount += 1
+
+    return 100* greenCount / (640*640) 
+
+
+#UNFORTUNATELY THIS COEFFICIENT REQUIES A THRESHOLD WHICH IS NOT REPORTED. 
+#I AM JUST USING 2 FOR NOW
+def RGBToGreen(name):
+    img = Image.open("general/" + name)
+    im = np.asarray(img.convert('RGB'))
+    greenCount = 0;
+
+    for i in range(640):
+        for j in range(640):
+            r = im[i,j,0];
+            g = im[i,j,1];
+            b = im[i,j,2];
+            gmr = g - r
+            gmb = g - b
+            diff = gmr*gmb
+
+            if (gmr > 0 and diff > 2): 
+                greenCount += diff 
+
+    return 100* greenCount / (640*640) 
 
 def addNewRow(rowName, rowFunction):
-    for item in range(2010,2024):
-        #add a new column
-        data[str(rowName) + str(item)] = item
+    print("C1")
+    for item in range(2008,2025):
+        #make the new column
+        data[rowName+str(item)] = ""
+        print("C2")
+       
+        for i in range(0,len(data)):
+            imgName = data.loc[i,"Image"+str(item)]
+            if (not pd.isna(imgName)):
+                val = rowFunction(imgName) 
+                data.loc[i, rowName+str(item)] = val
+                print(item," ",i)
 
-        for i in data.index:
-            #step 1: Find if the image exists and what it's name is 
-            fName = "./general/" + data.loc[i,"ImageName"] + str(item) + "*"
-            print(fName) 
 
-            for f in glob.glob(fName):
-                print(f)
-                image = Image.open(f)
-                print("Got one!")
-                #step 2: Run the classification function on the image 
-                break
+addNewRow("HSVGreen",HSVToGreen)
+#addNewRow("RGBGreen",RGBToGreen)
 
-for i in data.index:
-    data.loc[i, "ImageName"] = "Index:" + str(i) + " Lat:" + str(data.loc[i,"Latitude"]) + " Long:" +  str(data.loc[i,"Longitude"])  + " Date:"
+data.to_csv("DataWithHSVGreenVals")
 
-#Index:945 Lat:38.48036703 Long:-122.7426521 Date:2011
 
-addNewRow("HSV","")
-#print(data.columns)
-
-#print(glob.glob("./general/*"))

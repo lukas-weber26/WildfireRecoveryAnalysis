@@ -9,7 +9,7 @@ for a in panos:
     if a.date != None:
         print (a.date)
         print (a.pano_id)
-        image = get_streetview(pano_id=a.pano_id,api_key="AIzaSyCKAa7TIgjJzVKdQlD_fK2v68WrHVx7R3I")
+        image = get_streetview(pano_id=a.pano_id,api_key="")
         name = "Cali" + a.date+ ".jpg" 
         image.save(name, "jpeg")
 

@@ -18,7 +18,7 @@ for index in data.index:
         for p in panos:
             if ((p.date != None) and (imageCount < 10000)):
                 name = "Index:" + str(index) + " Lat:" + str(latitude) + " Long:" + str(longitude) + " Date:" + str(p.date)
-                image = get_streetview(pano_id=p.pano_id,api_key="AIzaSyAlqVPu9qzZ8sr4kRRcuxk1IVvEljuhP24")
+                image = get_streetview(pano_id=p.pano_id,api_key="")
 
                 path_general = "general" 
                 path_specific = "Lat:" + str(latitude) + " Long:" + str(longitude)
