@@ -3,7 +3,7 @@ import numpy as np
 import os 
 from PIL import Image 
 
-data = pd.read_csv("withImgNames.csv")
+data = pd.read_csv("DataWithHSVGreenVals.csv")
 
 def HSVToGreen(name):
     img = Image.open("general/" + name)
@@ -53,12 +53,11 @@ def addNewRow(rowName, rowFunction):
             if (not pd.isna(imgName)):
                 val = rowFunction(imgName) 
                 data.loc[i, rowName+str(item)] = val
-                print(item," ",i)
+                print(item," ", val, " ",i)
 
+#addNewRow("HSVGreen",HSVToGreen)
+addNewRow("RGBGreen",RGBToGreen)
 
-addNewRow("HSVGreen",HSVToGreen)
-#addNewRow("RGBGreen",RGBToGreen)
-
-data.to_csv("DataWithHSVGreenVals")
+data.to_csv("DataWithRGBGreenVals")
 
 
